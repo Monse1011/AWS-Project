@@ -3,11 +3,10 @@ import express from 'express';
 const app = express();
 app.use(express.json());
 
-// ─── In-Memory Storage ───────────────────────────────────────────────────────
 let alumnos = [];
 let profesores = [];
 
-// ─── Validators ──────────────────────────────────────────────────────────────
+
 function validateAlumno(body) {
     const errors = [];
 
@@ -60,9 +59,8 @@ function validateProfesor(body) {
     return errors;
 }
 
-// ─── Alumnos Routes ───────────────────────────────────────────────────────────
 
-// 405 - Métodos no soportados en la colección
+
 app.delete('/alumnos', (req, res) => res.status(405).json({ error: 'Método no permitido' }));
 app.put('/alumnos', (req, res) => res.status(405).json({ error: 'Método no permitido' }));
 app.patch('/alumnos', (req, res) => res.status(405).json({ error: 'Método no permitido' }));
@@ -142,9 +140,9 @@ app.delete('/alumnos/:id', (req, res) => {
     }
 });
 
-// ─── Profesores Routes ────────────────────────────────────────────────────────
 
-// 405 - Métodos no soportados en la colección
+
+
 app.delete('/profesores', (req, res) => res.status(405).json({ error: 'Método no permitido' }));
 app.put('/profesores', (req, res) => res.status(405).json({ error: 'Método no permitido' }));
 app.patch('/profesores', (req, res) => res.status(405).json({ error: 'Método no permitido' }));
@@ -223,7 +221,7 @@ app.delete('/profesores/:id', (req, res) => {
     }
 });
 
-// ─── Start Server ─────────────────────────────────────────────────────────────
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
