@@ -6,10 +6,6 @@ import s3 from '../config/s3.js';
 import sns from '../config/sns.js';
 import { PublishCommand } from '@aws-sdk/client-sns';
 import dynamo from '../config/dynamo.js';
-import crypto from 'node:crypto';
-
-
-
 import {
     PutCommand,
     ScanCommand,
@@ -190,7 +186,9 @@ router.post('/alumnos/:id/session/login', async (req, res) => {
         }
 
         const sessionString =
-            crypto.randomBytes(64).toString('hex');
+            Array.from({ length: 128 }, () =>
+                Math.floor(Math.random() * 16).toString(16)
+            ).join('');
 
         const session = {
             id: uuidv4(),
