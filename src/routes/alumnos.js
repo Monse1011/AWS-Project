@@ -24,7 +24,6 @@ const upload = multer({
 
 function alumnoValido(body) {
     return (
-        body.id &&
         body.nombres &&
         body.apellidos &&
         body.matricula &&

@@ -4,7 +4,8 @@ import sequelize from '../config/database.js';
 const Profesor = sequelize.define('Profesor', {
     id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     nombres: DataTypes.STRING,
     apellidos: DataTypes.STRING,
