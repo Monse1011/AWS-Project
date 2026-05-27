@@ -1,5 +1,5 @@
 import express from 'express';
-import Alumno from '../models/Alumno.js';
+import Alumno from '../models/alumno.js';
 import multer from 'multer';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import s3 from '../config/s3.js';

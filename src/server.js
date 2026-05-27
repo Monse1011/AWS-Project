@@ -1,8 +1,8 @@
 import express from 'express';
 import sequelize from './config/database.js';
 
-import './models/Alumno.js';
-import './models/Profesor.js';
+import './models/alumno.js';
+import './models/profesor.js';
 
 import alumnosRouter from './routes/alumnos.js';
 import profesoresRouter from './routes/profesores.js';
