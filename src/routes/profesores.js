@@ -5,12 +5,14 @@ const router = express.Router();
 
 function profesorValido(body) {
     return (
+        body.id &&
         body.nombres &&
         body.apellidos &&
         body.numeroEmpleado > 0 &&
         body.horasClase > 0
     );
 }
+
 router.post('/profesores', async (req, res) => {
     try {
 
