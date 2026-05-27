@@ -6,7 +6,6 @@ import s3 from '../config/s3.js';
 import sns from '../config/sns.js';
 import { PublishCommand } from '@aws-sdk/client-sns';
 import dynamo from '../config/dynamo.js';
-
 import {
     PutCommand,
     ScanCommand,
@@ -14,7 +13,7 @@ import {
 } from '@aws-sdk/lib-dynamodb';
 
 import { v4 as uuidv4 } from 'uuid';
-import crypto from 'crypto';
+
 
 const router = express.Router();
 
@@ -23,8 +22,12 @@ const upload = multer({
 });
 
 function alumnoValido(body) {
+
+    if (!body) {
+        return false;
+    }
+
     return (
-        body.id &&
         body.nombres &&
         body.apellidos &&
         body.matricula &&
@@ -182,7 +185,10 @@ router.post('/alumnos/:id/session/login', async (req, res) => {
             return res.status(400).json({ error: 'Contraseña incorrecta' });
         }
 
-        const sessionString = crypto.randomBytes(64).toString('hex');
+        const sessionString =
+            Array.from({ length: 128 }, () =>
+                Math.floor(Math.random() * 16).toString(16)
+            ).join('');
 
         const session = {
             id: uuidv4(),
