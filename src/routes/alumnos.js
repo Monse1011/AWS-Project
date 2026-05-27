@@ -6,6 +6,7 @@ import s3 from '../config/s3.js';
 import sns from '../config/sns.js';
 import { PublishCommand } from '@aws-sdk/client-sns';
 import dynamo from '../config/dynamo.js';
+
 import {
     PutCommand,
     ScanCommand,
@@ -21,13 +22,22 @@ const upload = multer({
     storage: multer.memoryStorage()
 });
 
-function alumnoValido(body) {
+function getRandomString(length) {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
 
-    if (!body) {
-        return false;
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(
+            Math.floor(Math.random() * chars.length)
+        );
     }
 
+    return result;
+}
+
+function alumnoValido(body) {
     return (
+        body.id &&
         body.nombres &&
         body.apellidos &&
         body.matricula &&
@@ -178,17 +188,18 @@ router.post('/alumnos/:id/session/login', async (req, res) => {
         const alumno = await Alumno.findByPk(req.params.id);
 
         if (!alumno) {
-            return res.status(404).json({ error: 'Alumno no encontrado' });
+            return res.status(404).json({
+                error: 'Alumno no encontrado'
+            });
         }
 
         if (req.body.password !== alumno.password) {
-            return res.status(400).json({ error: 'Contraseña incorrecta' });
+            return res.status(400).json({
+                error: 'Contraseña incorrecta'
+            });
         }
 
-        const sessionString =
-            Array.from({ length: 128 }, () =>
-                Math.floor(Math.random() * 16).toString(16)
-            ).join('');
+        const sessionString = getRandomString(128);
 
         const session = {
             id: uuidv4(),
@@ -206,7 +217,9 @@ router.post('/alumnos/:id/session/login', async (req, res) => {
         res.status(200).json(session);
 
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({
+            error: error.message
+        });
     }
 });
 
@@ -216,7 +229,7 @@ router.post('/alumnos/:id/session/verify', async (req, res) => {
             TableName: 'sesiones-alumnos'
         }));
 
-        const session = (result.Items || []).find(
+        const session = result.Items.find(
             s => s.sessionString === req.body.sessionString
         );
 
@@ -237,7 +250,7 @@ router.post('/alumnos/:id/session/logout', async (req, res) => {
             TableName: 'sesiones-alumnos'
         }));
 
-        const session = (result.Items || []).find(
+        const session = result.Items.find(
             s => s.sessionString === req.body.sessionString
         );
 
