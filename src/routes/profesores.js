@@ -5,10 +5,16 @@ const router = express.Router();
 
 function profesorValido(body) {
     return (
-        body.id &&
-        body.nombres &&
-        body.apellidos &&
+        typeof body.nombres === 'string' &&
+        body.nombres.trim() !== '' &&
+
+        typeof body.apellidos === 'string' &&
+        body.apellidos.trim() !== '' &&
+
+        typeof body.numeroEmpleado === 'number' &&
         body.numeroEmpleado > 0 &&
+
+        typeof body.horasClase === 'number' &&
         body.horasClase > 0
     );
 }
