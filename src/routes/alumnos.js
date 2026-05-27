@@ -37,12 +37,20 @@ function getRandomString(length) {
 
 function alumnoValido(body) {
     return (
-        body.id &&
-        body.nombres &&
-        body.apellidos &&
-        body.matricula &&
+        typeof body.nombres === 'string' &&
+        body.nombres.trim() !== '' &&
+
+        typeof body.apellidos === 'string' &&
+        body.apellidos.trim() !== '' &&
+
+        typeof body.matricula === 'string' &&
+        body.matricula.trim() !== '' &&
+
         typeof body.promedio === 'number' &&
-        body.promedio >= 0
+        body.promedio >= 0 &&
+
+        typeof body.password === 'string' &&
+        body.password.trim() !== ''
     );
 }
 
@@ -143,7 +151,8 @@ router.post('/alumnos/:id/fotoPerfil', upload.single('foto'), async (req, res) =
         }));
 
         const fotoPerfilUrl =
-            `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+            `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${fileName}`;
+
 
         await alumno.update({ fotoPerfilUrl });
 
