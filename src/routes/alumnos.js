@@ -13,8 +13,6 @@ import {
     UpdateCommand
 } from '@aws-sdk/lib-dynamodb';
 
-import { v4 as uuidv4 } from 'uuid';
-
 
 const router = express.Router();
 
@@ -211,7 +209,7 @@ router.post('/alumnos/:id/session/login', async (req, res) => {
         const sessionString = getRandomString(128);
 
         const session = {
-            id: uuidv4(),
+            id: getRandomString(32),
             fecha: Date.now(),
             alumnoId: alumno.id,
             active: true,
