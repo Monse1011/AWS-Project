@@ -6,6 +6,8 @@ import s3 from '../config/s3.js';
 import sns from '../config/sns.js';
 import { PublishCommand } from '@aws-sdk/client-sns';
 import dynamo from '../config/dynamo.js';
+import * as crypto from 'crypto';
+
 
 import {
     PutCommand,
@@ -14,7 +16,7 @@ import {
 } from '@aws-sdk/lib-dynamodb';
 
 import { v4 as uuidv4 } from 'uuid';
-import crypto from 'crypto';
+
 
 const router = express.Router();
 
