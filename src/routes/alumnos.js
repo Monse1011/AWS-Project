@@ -210,7 +210,7 @@ router.post('/alumnos/:id/session/verify', async (req, res) => {
             TableName: 'sesiones-alumnos'
         }));
 
-        const session = result.Items.find(
+        const session = (result.Items || []).find(
             s => s.sessionString === req.body.sessionString
         );
 
@@ -231,7 +231,7 @@ router.post('/alumnos/:id/session/logout', async (req, res) => {
             TableName: 'sesiones-alumnos'
         }));
 
-        const session = result.Items.find(
+        const session = (result.Items || []).find(
             s => s.sessionString === req.body.sessionString
         );
 
