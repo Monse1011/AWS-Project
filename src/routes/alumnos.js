@@ -188,7 +188,8 @@ router.post('/alumnos/:id/session/login', async (req, res) => {
             return res.status(400).json({ error: 'Contraseña incorrecta' });
         }
 
-        const sessionString = crypto.randomBytes(64).toString('hex');
+        const sessionString =
+            randomBytes(64).toString('hex');
 
         const session = {
             id: uuidv4(),
