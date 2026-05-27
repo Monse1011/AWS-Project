@@ -3,3 +3,6 @@ src/.env
 src/.env
 src/.env
 src/.env
+node_modules/
+.env
+src/.env
