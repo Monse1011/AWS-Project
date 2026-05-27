@@ -8,7 +8,7 @@ import alumnosRouter from './routes/alumnos.js';
 import profesoresRouter from './routes/profesores.js';
 
 const app = express();
-const PORT = process.env.PORT || 8080 ;
+const PORT = process.env.PORT || 80 ;
 
 app.use(express.json());
 
