@@ -23,6 +23,11 @@ const upload = multer({
 });
 
 function alumnoValido(body) {
+
+    if (!body) {
+        return false;
+    }
+
     return (
         body.nombres &&
         body.apellidos &&
